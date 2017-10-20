@@ -24,9 +24,14 @@ join(detail1([Roll_no, Name, Email, Type]),
 join(detail1([Roll_no, Name, Email, Type]),
      detail2([Roll_no, Name, Type, Sup, Cosup]),
      [Roll_no, Name, Email, Sup, Cosup, Type]).
-search(I, L) :- 
+searchByRoll(I, L) :- 
     detail1([I|La]),
     detail2([I| Lb]),
     join(detail1([I|La]), detail2([I|Lb]), L).
-search(N, L) :-
+searchByName(N, L) :-
     detail1([I, N|La]), detail2([I, N| Lb]), join(detail1([I, N|La]), detail2([I, N|Lb]), L).
+search(A, L) :-
+    searchByName(A, L);
+    searchByRoll(A, L).
+display(L) :-
+    searchByRoll(_, L).
