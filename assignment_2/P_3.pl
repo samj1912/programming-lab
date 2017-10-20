@@ -51,12 +51,6 @@ valid_move([X1, Y1], [X2, Y2]) :-
 solve_maze_helper(Start, Start, _, Path, Path) :-
     !.
 solve_maze_helper(Start, Current, MaxL, Acc, Path) :-
-    valid_move(Current, Start),
-    length(Acc, Len),
-    Len =< MaxL,
-    Path = [Start|Acc],
-    !.
-solve_maze_helper(Start, Current, MaxL, Acc, Path) :-
     length(Acc, Len),
     Len =< MaxL,
     valid_move(Current, Next),
@@ -65,7 +59,7 @@ solve_maze_helper(Start, Current, MaxL, Acc, Path) :-
 solve_maze(L) :-
     start(Start),
     end(End),
-    maze(N,M),
+    maze(N, M),
     solve_maze_helper(Start, End, N*M, [End], L).
 
 find_shortest_path([], _, MinPath, MinPath).
@@ -79,10 +73,11 @@ find_shortest_path([Path|Paths], MinLen, MinPath, Output) :-
     find_shortest_path(Paths, MinLen, MinPath, Output).
 
 solve_maze_shortest(L) :-
-    solve_maze_shortest(_, _, L).
-solve_maze_shortest(Start, End, L) :-
+    solve_maze_shortest(_, _, L, _).
+solve_maze_shortest(Start, End, L, Count) :-
     start(Start),
     end(End),
-    maze(N,M),
+    maze(N, M),
     findall(Path, solve_maze_helper(Start, End, N*M, [End], Path), Paths),
-    find_shortest_path(Paths, N*M, [], L).
+    find_shortest_path(Paths, N*M, [], L),
+    length(Paths, Count).
