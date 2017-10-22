@@ -47,7 +47,7 @@ barrier([5,4], [6,4]).
 %% Function to determine if a point [X, Y] is a
 %% point inside the maze or not
 inside_maze(X, Y) :-
-    maze(M, N),
+    maze(N, M),
     X =< M,
     Y =< N,
     X >= 1,
@@ -102,6 +102,10 @@ solve_maze(L) :-
     end(End),
     maze(N, M),
     solve_maze_helper(Start, End, N*M, [End], L).
+
+%% ------------------------------
+%% Optimal Maze Solving Algorithm
+%% ------------------------------
 
 %% Optimal path finding algorithm, the Optimal path being the one with 
 %% the least number of hops. We are basically finding all the possible paths

@@ -28,7 +28,7 @@ grand_parent(X, Y) :-
 uncle(X, Y) :-
     male(X),
     grand_parent(Z, Y), parent(Z, X),
-    \+ parent(X, Y).
+    not(parent(X, Y)).
 
 %% ----------------------------------------------
 %% Rules for determining Half-Sister Relationship
