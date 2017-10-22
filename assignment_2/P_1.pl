@@ -12,7 +12,7 @@ female(avantika).
 grandparent(X, Y) :-
     parent(X, Z), parent(Z, Y).
 uncle(X, Y) :-
-    male(X), grandparent(Z, Y), parent(Z, X).
+    male(X), grandparent(Z, Y), parent(Z, X), \+parent(X,Y).
 halfsister(X, Y) :-
     X \== Y,
     female(X),
