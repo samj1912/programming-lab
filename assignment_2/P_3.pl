@@ -132,15 +132,16 @@ find_shortest_path([Path|Paths], MinLen, MinPath, Output) :-
 
 %% A simple display function to display all optimal paths.
 solve_maze_shortest(L) :-
-    solve_maze_shortest(_, _, L, _).
+    solve_maze_shortest(_, _, L, _, _).
 
 %% Utility function to initialize the Optimal Maze solver
 %% with appropriate values for `Start` point, `End` point, 
 %% initial minimum length (size of the maze) and a list of all paths, `Paths`
-solve_maze_shortest(Start, End, L, Count) :-
+solve_maze_shortest(Start, End, L, Count, PathLength) :-
     start(Start),
     end(End),
     maze(N, M),
     findall(Path, solve_maze_helper(Start, End, N*M, [End], Path), Paths),
     find_shortest_path(Paths, N*M, [], L),
+    length(L, PathLength),
     length(Paths, Count).
